@@ -81,6 +81,7 @@ class FastMRIDataset(H5SliceData):
 
     def __getitem__(self, idx: int) -> Dict[str, Any]:
         sample = super().__getitem__(idx)
+        sample["kspace"] = sample["kspace"][...,::2] + 1j * sample["kspace"][...,1::2]
 
         if self.pass_attrs:
             sample["scaling_factor"] = sample["attrs"]["max"]
